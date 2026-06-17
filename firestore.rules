@@ -1,0 +1,86 @@
+// ─────────────────────────────────────────────────────────────
+// FIRESTORE SECURITY RULES — copy this into:
+// Firebase Console → Firestore Database → Rules → paste → Publish
+// ─────────────────────────────────────────────────────────────
+//
+// These rules:
+//  - Let any signed-in user read/write their OWN user doc (but not
+//    change their own "role" field to "admin" — only an admin can do
+//    that, via the Firebase Console).
+//  - Let admins read/write everything (for the Admin Panel pages).
+//  - Let any signed-in user create orders/reviews/consultations for
+//    themselves, and read their own orders/reviews.
+//  - Let anyone (even logged-out visitors) submit a contact message
+//    or consultation request, since those forms don't require login.
+//  - Block all other access by default.
+//
+// 🔧 HOW TO MAKE YOUR FIRST ADMIN ACCOUNT:
+//   1. Register normally on the website (creates a Firestore user doc
+//      with role: "user").
+//   2. Go to Firebase Console → Firestore Database → "users" collection
+//      → find your document (matches your email) → edit the "role"
+//      field from "user" to "admin" → Save.
+//   3. Log out and log back in on the website — you'll now see the
+//      Admin Panel.
+// ─────────────────────────────────────────────────────────────
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ─── USERS ───────────────────────────────────
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      // Users can update their own doc, but never their own "role" field
+      allow update: if (isOwner(userId) &&
+                          request.resource.data.role == resource.data.role)
+                        || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── ORDERS ──────────────────────────────────
+    match /orders/{orderId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin(); // only admin can mark as "completed"
+      allow delete: if isAdmin();
+    }
+
+    // ─── REVIEWS ─────────────────────────────────
+    match /reviews/{reviewId} {
+      allow read: if true; // reviews are public
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+
+    // ─── CONTACT MESSAGES ────────────────────────
+    match /messages/{messageId} {
+      allow read: if isAdmin();
+      allow create: if true; // anyone can submit the contact form
+      allow update, delete: if isAdmin();
+    }
+
+    // ─── CONSULTATIONS ───────────────────────────
+    match /consultations/{consultationId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if true; // anyone can book a consultation
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}
