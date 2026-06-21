@@ -24,7 +24,7 @@ export const DB = {
       },
       {
         id: 'p2', title: 'Placement Prediction',
-        category: 'Java / JSP', price: 4599, originalPrice: 8499,
+        category: 'Java / JSP', price: 1599, originalPrice: 8499,
         description: 'Complete hospital management with patient records, doctor appointments, billing, and admin dashboard built with Java Spring Boot.',
         techStack: ['JavaScript', 'Python', 'Flask', 'Html', 'CSS'],
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=250&fit=crop',
