@@ -4,7 +4,7 @@ import { trackEvent } from '../utils/analytics'
 
 // 🔧 Change your WhatsApp number here (with country code, no + or spaces)
 const WHATSAPP_NUMBER = '918104227377'
-const DEFAULT_MESSAGE = 'Hi NexProjecto! I have a query regarding a project.'
+const DEFAULT_MESSAGE = 'Hi NexProjecto! I need a professional website/app for my business.'
 
 export default function WhatsAppButton() {
   const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`
