@@ -14,7 +14,7 @@ export const DB = {
     const defaults = [
       {
         id: 'p1', title: 'E-Commerce Website (MERN Stack)',
-        category: 'Web Development', price: 5499, originalPrice: 7999,
+        category: 'Web Development', price: 5499, originalPrice: 6999,
         description: 'Full-stack e-commerce with React, Node.js, MongoDB, Stripe payments, admin panel, product management, cart, and authentication.',
         techStack: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'],
         image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
@@ -24,7 +24,7 @@ export const DB = {
       },
       {
         id: 'p2', title: 'Placement Prediction',
-        category: 'Java / JSP', price: 6999, originalPrice: 8499,
+        category: 'Java / JSP', price: 4599, originalPrice: 8499,
         description: 'Complete hospital management with patient records, doctor appointments, billing, and admin dashboard built with Java Spring Boot.',
         techStack: ['JavaScript', 'Python', 'Flask', 'Html', 'CSS'],
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=250&fit=crop',
@@ -34,7 +34,7 @@ export const DB = {
       },
       {
         id: 'p3', title: 'Loan Default Risk ',
-        category: 'Python / ML', price: 7000, originalPrice: 8999,
+        category: 'Python / ML', price: 5000, originalPrice: 8999,
         description: 'Intelligent chatbot using Python, NLP, and machine learning. Includes training, deployment with Flask API, and React frontend.',
         techStack: ['Python', 'Flask', 'NLP', 'TensorFlow', 'React'],
         image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop',
@@ -64,7 +64,7 @@ export const DB = {
       },
       {
         id: 'p6', title: 'Library Management System',
-        category: 'Java / JSP', price: 799, originalPrice: 1499,
+        category: 'Java / JSP', price: 2999, originalPrice: 1499,
         description: 'Java-based library management with book issuing, return tracking, fine calculation, member management, and reports.',
         techStack: ['Java', 'JDBC', 'MySQL', 'Servlet', 'JSP'],
         image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=250&fit=crop',
