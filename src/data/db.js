@@ -14,27 +14,27 @@ export const DB = {
     const defaults = [
       {
         id: 'p1', title: 'E-Commerce Website (MERN Stack)',
-        category: 'Web Development', price: 1499, originalPrice: 2999,
+        category: 'Web Development', price: 5499, originalPrice: 7999,
         description: 'Full-stack e-commerce with React, Node.js, MongoDB, Stripe payments, admin panel, product management, cart, and authentication.',
         techStack: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'],
         image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
-        level: 'Advanced', downloads: 342, rating: 4.8, reviews: 56,
+        level: 'Advanced', downloads: 42, rating: 4.8, reviews: 56,
         features: ['Admin Panel', 'Payment Gateway', 'Authentication', 'Product Management'],
         status: 'active'
       },
       {
-        id: 'p2', title: 'Hospital Management System',
-        category: 'Java / JSP', price: 1299, originalPrice: 2499,
+        id: 'p2', title: 'Placement Prediction',
+        category: 'Java / JSP', price: 6999, originalPrice: 8499,
         description: 'Complete hospital management with patient records, doctor appointments, billing, and admin dashboard built with Java Spring Boot.',
-        techStack: ['Java', 'Spring Boot', 'MySQL', 'JSP', 'Bootstrap'],
+        techStack: ['JavaScript', 'Python', 'Flask', 'Html', 'CSS'],
         image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=250&fit=crop',
-        level: 'Advanced', downloads: 218, rating: 4.7, reviews: 43,
+        level: 'Advanced', downloads: 18, rating: 4.7, reviews: 43,
         features: ['Patient Records', 'Doctor Scheduling', 'Billing', 'Reports'],
         status: 'active'
       },
       {
-        id: 'p3', title: 'AI Chatbot with Python',
-        category: 'Python / ML', price: 999, originalPrice: 1999,
+        id: 'p3', title: 'Loan Default Risk ',
+        category: 'Python / ML', price: 7000, originalPrice: 8999,
         description: 'Intelligent chatbot using Python, NLP, and machine learning. Includes training, deployment with Flask API, and React frontend.',
         techStack: ['Python', 'Flask', 'NLP', 'TensorFlow', 'React'],
         image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop',
@@ -43,18 +43,18 @@ export const DB = {
         status: 'active'
       },
       {
-        id: 'p4', title: 'Student Result Management',
-        category: 'PHP / MySQL', price: 599, originalPrice: 999,
+        id: 'p4', title: 'Disease Prediction',
+        category: 'PHP / MySQL', price: 5000, originalPrice: 6999,
         description: 'PHP-based student result management system with result entry, report generation, SMS notifications, and multi-role access.',
-        techStack: ['PHP', 'MySQL', 'Bootstrap', 'jQuery', 'FPDF'],
+        techStack: ['PHP', 'MySQL', 'Python', 'jQuery', 'FPDF'],
         image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop',
-        level: 'Beginner', downloads: 421, rating: 4.6, reviews: 71,
+        level: 'Beginner', downloads: 21, rating: 4.6, reviews: 71,
         features: ['Result Entry', 'PDF Reports', 'Multi-role', 'SMS Alert'],
         status: 'active'
       },
       {
-        id: 'p5', title: 'Food Delivery App (React Native)',
-        category: 'Mobile App', price: 1799, originalPrice: 3499,
+        id: 'p5', title: 'Food Delivery App (MERN Stack)',
+        category: 'Mobile App', price: 4000, originalPrice: 5000,
         description: 'Cross-platform food delivery app with real-time tracking, push notifications, payment gateway, and restaurant admin panel.',
         techStack: ['React Native', 'Firebase', 'Node.js', 'Google Maps', 'Stripe'],
         image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop',
