@@ -1,6 +1,24 @@
 import { Link } from 'react-router-dom'
-import { FiMail, FiPhone, FiInstagram, FiTwitter, FiYoutube, FiGithub } from 'react-icons/fi'
+import { FiMail, FiPhone, FiInstagram, FiLinkedin, FiFacebook } from 'react-icons/fi'
 import { motion } from 'framer-motion'
+
+const socialLinks = [
+  {
+    Icon: FiInstagram,
+    href: 'https://www.instagram.com/nexprojecto?utm_source=qr&igsh=MXRicjBseHdycW5qdA==',
+    label: 'Instagram'
+  },
+  {
+    Icon: FiLinkedin,
+    href: 'https://www.linkedin.com/in/nex-projecto-6993a8416',
+    label: 'LinkedIn'
+  },
+  {
+    Icon: FiFacebook,
+    href: 'https://www.facebook.com/nexprojecto',
+    label: 'Facebook'
+  }
+]
 
 export default function Footer() {
   return (
@@ -33,8 +51,14 @@ export default function Footer() {
               Premium student projects, source code and expert consultation for all domains.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem' }}>
-              {[FiInstagram, FiTwitter, FiYoutube, FiGithub].map((Icon, i) => (
-                <motion.a key={i} href="#" whileHover={{ scale: 1.2, color: 'var(--primary-light)' }}
+              {socialLinks.map(({ Icon, href, label }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  whileHover={{ scale: 1.2, color: 'var(--primary-light)' }}
                   style={{
                     width: 36, height: 36,
                     background: 'rgba(139,92,246,0.15)',
@@ -42,7 +66,7 @@ export default function Footer() {
                     borderRadius: '8px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: 'var(--text-muted)', fontSize: '1rem',
-                    transition: 'all 0.3s'
+                    transition: 'all 0.3s', textDecoration: 'none'
                   }}>
                   <Icon />
                 </motion.a>
@@ -52,7 +76,7 @@ export default function Footer() {
 
           {/* Links */}
           {[
-            { title: 'Quick Links', links: [['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact']] },
+            { title: 'Quick Links', links: [['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact'], ['/terms', 'Terms & Conditions']] },
             { title: 'Categories', links: [['#', 'Web Development'], ['#', 'Java / JSP'], ['#', 'Python / ML'], ['#', 'Mobile Apps'], ['#', 'PHP / MySQL']] },
           ].map(section => (
             <div key={section.title}>
@@ -96,9 +120,15 @@ export default function Footer() {
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
             © 2026 NexProjecto. All rights reserved.
           </p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-            Made with 💜 for students
-          </p>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <Link to="/terms" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.target.style.color = 'var(--primary-light)'}
+              onMouseLeave={e => e.target.style.color = 'var(--text-muted)'}
+            >Terms & Conditions</Link>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>
+              Made with 💜 for students
+            </p>
+          </div>
         </div>
       </div>
     </footer>
