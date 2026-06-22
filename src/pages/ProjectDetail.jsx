@@ -124,7 +124,7 @@ export default function ProjectDetail() {
 
               <h3 style={{ fontWeight: '700', marginBottom: '0.75rem' }}>What's Included</h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                {['Complete Source Code', 'Database Schema', 'Project Documentation', 'Setup Guide', 'PPT Presentation', ...project.features].map(f => (
+                {['Complete, Working Source Code', 'Database Schema & Setup Guide', 'Project Documentation', 'Free Project Setup Included', ...project.features].map(f => (
                   <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                     <FiCheck style={{ color: '#10B981', flexShrink: 0 }} /> {f}
                   </div>
