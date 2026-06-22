@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroSection from '../components/HeroSection'
 import ProjectCard from '../components/ProjectCard'
-import { DB } from '../data/db'
+import { getAllProjects, seedProjectsIfEmpty } from '../firebase/firestoreService'
 import { FiCode, FiSmartphone, FiCpu, FiDatabase, FiMessageCircle, FiZap } from 'react-icons/fi'
 
 const categories = [
@@ -21,7 +21,20 @@ const testimonials = [
 ]
 
 export default function Home() {
-  const projects = DB.getProjects().slice(0, 6)
+  const [projects, setProjects] = useState([])
+  useEffect(() => {
+    const defaultProjects = [
+      { id: 'p1', title: 'E-Commerce Website (MERN Stack)', category: 'Web Development', price: 1499, originalPrice: 2999, description: 'Full-stack e-commerce with React, Node.js, MongoDB, Stripe payments, admin panel, product management, cart, and authentication.', techStack: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT'], image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop', level: 'Advanced', downloads: 342, rating: 4.8, reviews: 56, features: ['Admin Panel', 'Payment Gateway', 'Authentication', 'Product Management'], status: 'active' },
+      { id: 'p2', title: 'Hospital Management System', category: 'Java / JSP', price: 1299, originalPrice: 2499, description: 'Complete hospital management with patient records, doctor appointments, billing, and admin dashboard built with Java Spring Boot.', techStack: ['Java', 'Spring Boot', 'MySQL', 'JSP', 'Bootstrap'], image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=250&fit=crop', level: 'Advanced', downloads: 218, rating: 4.7, reviews: 43, features: ['Patient Records', 'Doctor Scheduling', 'Billing', 'Reports'], status: 'active' },
+      { id: 'p3', title: 'AI Chatbot with Python', category: 'Python / ML', price: 999, originalPrice: 1999, description: 'Intelligent chatbot using Python, NLP, and machine learning. Includes training, deployment with Flask API, and React frontend.', techStack: ['Python', 'Flask', 'NLP', 'TensorFlow', 'React'], image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop', level: 'Intermediate', downloads: 189, rating: 4.9, reviews: 38, features: ['NLP Engine', 'Flask API', 'Training Module', 'React UI'], status: 'active' },
+      { id: 'p4', title: 'Student Result Management', category: 'PHP / MySQL', price: 599, originalPrice: 999, description: 'PHP-based student result management system with result entry, report generation, SMS notifications, and multi-role access.', techStack: ['PHP', 'MySQL', 'Bootstrap', 'jQuery', 'FPDF'], image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=250&fit=crop', level: 'Beginner', downloads: 421, rating: 4.6, reviews: 71, features: ['Result Entry', 'PDF Reports', 'Multi-role', 'SMS Alert'], status: 'active' },
+      { id: 'p5', title: 'Food Delivery App (React Native)', category: 'Mobile App', price: 1799, originalPrice: 3499, description: 'Cross-platform food delivery app with real-time tracking, push notifications, payment gateway, and restaurant admin panel.', techStack: ['React Native', 'Firebase', 'Node.js', 'Google Maps', 'Stripe'], image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=250&fit=crop', level: 'Advanced', downloads: 156, rating: 4.8, reviews: 29, features: ['Real-time Tracking', 'Push Notifications', 'Payment', 'Admin Panel'], status: 'active' },
+      { id: 'p6', title: 'Library Management System', category: 'Java / JSP', price: 799, originalPrice: 1499, description: 'Java-based library management with book issuing, return tracking, fine calculation, member management, and reports.', techStack: ['Java', 'JDBC', 'MySQL', 'Servlet', 'JSP'], image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=250&fit=crop', level: 'Intermediate', downloads: 287, rating: 4.5, reviews: 52, features: ['Book Issue/Return', 'Fine Calculation', 'Member Mgmt', 'Reports'], status: 'active' }
+    ]
+    seedProjectsIfEmpty(defaultProjects).then(() =>
+      getAllProjects().then(list => setProjects(list.filter(p => p.status === 'active').slice(0, 6)))
+    )
+  }, [])
 
   return (
     <div>
