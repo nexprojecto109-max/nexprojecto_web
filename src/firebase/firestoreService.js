@@ -118,3 +118,38 @@ export async function getAllConsultations() {
 export async function updateConsultationDoc(id, updates) {
   await updateDoc(doc(db, 'consultations', id), updates)
 }
+
+// ─── PROJECTS (Firebase Firestore) ───────────────
+export async function getAllProjects() {
+  const snap = await getDocs(collection(db, 'projects'))
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }))
+}
+
+export async function getProjectById(id) {
+  const snap = await getDoc(doc(db, 'projects', id))
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null
+}
+
+export async function addProjectDoc(project) {
+  const { id, ...data } = project
+  await setDoc(doc(db, 'projects', id), data)
+  return project
+}
+
+export async function updateProjectDoc(id, updates) {
+  await updateDoc(doc(db, 'projects', id), updates)
+}
+
+export async function deleteProjectDoc(id) {
+  const { deleteDoc } = await import('firebase/firestore')
+  await deleteDoc(doc(db, 'projects', id))
+}
+
+export async function seedProjectsIfEmpty(defaults) {
+  const snap = await getDocs(collection(db, 'projects'))
+  if (!snap.empty) return // already seeded
+  for (const p of defaults) {
+    const { id, ...data } = p
+    await setDoc(doc(db, 'projects', id), data)
+  }
+}
