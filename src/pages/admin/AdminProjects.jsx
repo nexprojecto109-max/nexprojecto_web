@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { DB } from '../../data/db'
 import { v4 as uuidv4 } from 'uuid'
 import toast from 'react-hot-toast'
-import { FiPlus, FiEdit, FiTrash2, FiX } from 'react-icons/fi'
+import { FiPlus, FiEdit, FiTrash2, FiX, FiLoader } from 'react-icons/fi'
+import {
+  getAllProjects, addProjectDoc, updateProjectDoc, deleteProjectDoc
+} from '../../firebase/firestoreService'
 
 const emptyProject = {
   title: '', category: 'Web Development', price: '', originalPrice: '',
@@ -13,12 +15,26 @@ const emptyProject = {
 }
 
 export default function AdminProjects() {
-  const [projects, setProjects] = useState(DB.getProjects())
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [editId, setEditId] = useState(null)
   const [form, setForm] = useState(emptyProject)
 
-  const refresh = () => setProjects(DB.getProjects())
+  const fetchProjects = async () => {
+    setLoading(true)
+    try {
+      const list = await getAllProjects()
+      setProjects(list)
+    } catch (err) {
+      toast.error('Failed to load projects')
+      console.error(err)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => { fetchProjects() }, [])
 
   const openAdd = () => { setForm(emptyProject); setEditId(null); setShowModal(true) }
   const openEdit = (p) => {
@@ -26,8 +42,9 @@ export default function AdminProjects() {
     setEditId(p.id); setShowModal(true)
   }
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault()
+    setSaving(true)
     const data = {
       ...form,
       price: Number(form.price),
@@ -35,37 +52,56 @@ export default function AdminProjects() {
       techStack: form.techStack.split(',').map(s => s.trim()).filter(Boolean),
       features: form.features.split(',').map(s => s.trim()).filter(Boolean)
     }
-    if (editId) {
-      DB.updateProject(editId, data)
-      toast.success('Project updated!')
-    } else {
-      DB.addProject({ ...data, id: uuidv4() })
-      toast.success('Project added!')
+    try {
+      if (editId) {
+        await updateProjectDoc(editId, data)
+        toast.success('Project updated! ✅')
+      } else {
+        const newId = uuidv4()
+        await addProjectDoc({ ...data, id: newId })
+        toast.success('Project added to Firebase! 🎉')
+      }
+      setShowModal(false)
+      await fetchProjects()
+    } catch (err) {
+      toast.error('Failed to save project. Check Firebase rules.')
+      console.error(err)
     }
-    setShowModal(false); refresh()
+    setSaving(false)
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!confirm('Delete this project?')) return
-    DB.deleteProject(id); refresh()
-    toast.success('Project deleted')
+    try {
+      await deleteProjectDoc(id)
+      toast.success('Project deleted')
+      await fetchProjects()
+    } catch (err) {
+      toast.error('Failed to delete project')
+      console.error(err)
+    }
   }
 
   return (
     <div>
-        <div className="page-header-row">
-          <div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: '900' }}>Manage <span className="gradient-text">Projects</span></h1>
-            <p style={{ color: 'var(--text-muted)' }}>{projects.length} total projects</p>
-          </div>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            className="btn-primary" onClick={openAdd}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <FiPlus /> Add Project
-          </motion.button>
+      <div className="page-header-row">
+        <div>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: '900' }}>Manage <span className="gradient-text">Projects</span></h1>
+          <p style={{ color: 'var(--text-muted)' }}>{projects.length} total projects • Synced with Firebase</p>
         </div>
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+          className="btn-primary" onClick={openAdd}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <FiPlus /> Add Project
+        </motion.button>
+      </div>
 
-        <div className="glass-card" style={{ overflow: 'hidden' }}>
+      <div className="glass-card" style={{ overflow: 'hidden' }}>
+        {loading ? (
+          <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+            Loading projects from Firebase...
+          </div>
+        ) : (
           <div style={{ overflowX: 'auto' }}>
             <table className="admin-table">
               <thead>
@@ -96,15 +132,14 @@ export default function AdminProjects() {
               </tbody>
             </table>
           </div>
-        </div>
+        )}
+      </div>
 
       {/* Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
               position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -113,9 +148,7 @@ export default function AdminProjects() {
             onClick={e => e.target === e.currentTarget && setShowModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
               className="glass-card"
               style={{ width: '100%', maxWidth: 600, padding: '2rem', maxHeight: '90vh', overflowY: 'auto' }}
             >
@@ -180,8 +213,10 @@ export default function AdminProjects() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-                  <motion.button whileHover={{ scale: 1.02 }} type="submit" className="btn-primary" style={{ flex: 1, padding: '0.8rem' }}>
-                    {editId ? 'Update Project' : 'Add Project'}
+                  <motion.button whileHover={{ scale: 1.02 }} type="submit" className="btn-primary"
+                    style={{ flex: 1, padding: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                    disabled={saving}>
+                    {saving ? <><FiLoader /> Saving to Firebase...</> : editId ? 'Update Project' : 'Add Project'}
                   </motion.button>
                   <button type="button" className="btn-outline" onClick={() => setShowModal(false)}
                     style={{ padding: '0.8rem 1.5rem' }}>Cancel</button>
