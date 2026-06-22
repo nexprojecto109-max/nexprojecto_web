@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { DB } from '../data/db'
+import { getProjectById } from '../firebase/firestoreService'
 import { useAuth } from '../context/AuthContext'
 import { FiStar, FiDownload, FiCheck, FiArrowLeft } from 'react-icons/fi'
 import toast from 'react-hot-toast'
@@ -14,12 +14,23 @@ export default function ProjectDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { user, purchaseProject } = useAuth()
-  const project = DB.getProjects().find(p => p.id === id)
+  const [project, setProject] = useState(null)
+  const [loadingProject, setLoadingProject] = useState(true)
   const [showPayment, setShowPayment] = useState(false)
 
   useEffect(() => {
-    if (project) trackEvent('project_view', project.title, { projectId: project.id })
-  }, [project?.id])
+    getProjectById(id).then(p => {
+      setProject(p)
+      setLoadingProject(false)
+      if (p) trackEvent('project_view', p.title, { projectId: p.id })
+    })
+  }, [id])
+
+  if (loadingProject) return (
+    <div style={{ textAlign: 'center', padding: '8rem 2rem', color: 'var(--text-muted)' }}>
+      Loading project...
+    </div>
+  )
 
   if (!project) return (
     <div style={{ textAlign: 'center', padding: '8rem 2rem' }}>
