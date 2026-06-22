@@ -1,19 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ProjectCard from '../components/ProjectCard'
-import { DB } from '../data/db'
+import { getAllProjects } from '../firebase/firestoreService'
 import { FiSearch, FiFilter } from 'react-icons/fi'
 
 const categories = ['All', 'Web Development', 'Java / JSP', 'Python / ML', 'PHP / MySQL', 'Mobile App']
 const levels = ['All', 'Beginner', 'Intermediate', 'Advanced']
 
 export default function Projects() {
+  const [allProjects, setAllProjects] = useState([])
+  const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [selectedCat, setSelectedCat] = useState('All')
   const [selectedLevel, setSelectedLevel] = useState('All')
   const [sortBy, setSortBy] = useState('popular')
 
-  let projects = DB.getProjects().filter(p => p.status === 'active')
+  useEffect(() => {
+    getAllProjects().then(list => {
+      setAllProjects(list)
+      setLoading(false)
+    })
+  }, [])
+
+  let projects = allProjects.filter(p => p.status === 'active')
 
   if (search) projects = projects.filter(p =>
     p.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -25,6 +34,12 @@ export default function Projects() {
   if (sortBy === 'price-high') projects = [...projects].sort((a, b) => b.price - a.price)
   if (sortBy === 'rating') projects = [...projects].sort((a, b) => b.rating - a.rating)
   if (sortBy === 'popular') projects = [...projects].sort((a, b) => b.downloads - a.downloads)
+
+  if (loading) return (
+    <div className="page-wrapper" style={{ padding: '6rem 0', textAlign: 'center', color: 'var(--text-muted)' }}>
+      Loading projects...
+    </div>
+  )
 
   return (
     <div className="page-wrapper" style={{ padding: '2rem 0 4rem' }}>
