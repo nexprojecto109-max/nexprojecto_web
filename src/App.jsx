@@ -24,6 +24,7 @@ import AdminProjects from './pages/admin/AdminProjects'
 import AdminUsers from './pages/admin/AdminUsers'
 import AdminOrders from './pages/admin/AdminOrders'
 import AdminConsultations from './pages/admin/AdminConsultations'
+import TermsAndConditions from './pages/TermsAndConditions'
 
 export default function App() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/consultation" element={<Consultation />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/dashboard" element={
             <ProtectedRoute><UserDashboard /></ProtectedRoute>
           } />
