@@ -74,7 +74,7 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}
           className="desktop-nav">
-          {[['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact']].map(([path, label]) => (
+          {[['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact'], ['/terms', 'T&C']].map(([path, label]) => (
             <Link key={path} to={path} style={{
               color: location.pathname === path ? 'var(--primary-light)' : 'var(--text-muted)',
               textDecoration: 'none', fontWeight: '500', fontSize: '0.95rem',
@@ -213,7 +213,7 @@ export default function Navbar() {
             }}
           >
             <div className="container" style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {[['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact']].map(([path, label]) => (
+              {[['/', 'Home'], ['/projects', 'Projects'], ['/consultation', 'Consultation'], ['/about', 'About'], ['/contact', 'Contact'], ['/terms', 'T&C']].map(([path, label]) => (
                 <Link key={path} to={path} onClick={() => setMenuOpen(false)} style={{
                   color: 'var(--text-muted)', textDecoration: 'none',
                   padding: '0.6rem 0', fontWeight: '500'
