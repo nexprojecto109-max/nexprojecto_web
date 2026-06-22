@@ -139,36 +139,53 @@ export default function ReviewSection({ project, alreadyPurchased }) {
         </div>
       )}
 
-      {/* Reviews list */}
+      {/* Reviews list - horizontal auto-scroll */}
       {loading ? (
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Loading reviews...</p>
       ) : reviews.length === 0 ? (
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>No reviews yet. Be the first to review this project!</p>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {reviews.map(r => (
-            <div key={r.id} className="glass-card" style={{ padding: '1.1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{
-                    width: 32, height: 32, borderRadius: '50%',
-                    background: 'var(--gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.9rem', flexShrink: 0
-                  }}><FiUser /></div>
-                  <strong style={{ fontSize: '0.9rem' }}>{r.userName}</strong>
+        <div style={{ position: 'relative', overflow: 'hidden' }}>
+          <style>{`
+            @keyframes scrollReviews {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .reviews-track {
+              display: flex;
+              gap: 1rem;
+              animation: scrollReviews ${Math.max(reviews.length * 6, 20)}s linear infinite;
+              width: max-content;
+            }
+            .reviews-track:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
+          <div className="reviews-track">
+            {[...reviews, ...reviews].map((r, idx) => (
+              <div key={`${r.id}-${idx}`} className="glass-card" style={{ padding: '1.1rem', minWidth: 280, maxWidth: 320, flexShrink: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: '50%',
+                      background: 'var(--gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '0.9rem', flexShrink: 0
+                    }}><FiUser /></div>
+                    <strong style={{ fontSize: '0.9rem' }}>{r.userName}</strong>
+                  </div>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>
+                    {new Date(r.date).toLocaleDateString('en-IN')}
+                  </span>
                 </div>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>
-                  {new Date(r.date).toLocaleDateString('en-IN')}
-                </span>
+                <StarRow value={r.rating} size="1rem" />
+                {r.comment && (
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginTop: '0.5rem', lineHeight: '1.6' }}>
+                    {r.comment}
+                  </p>
+                )}
               </div>
-              <StarRow value={r.rating} size="1rem" />
-              {r.comment && (
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginTop: '0.5rem', lineHeight: '1.6' }}>
-                  {r.comment}
-                </p>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
     </motion.div>
