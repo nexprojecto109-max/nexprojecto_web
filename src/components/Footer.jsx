@@ -100,7 +100,7 @@ export default function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
                 { Icon: FiMail, text: 'nexprojecto109@gmail.com', href: 'mailto:nexprojecto109@gmail.com' },
-                { Icon: FiPhone, text: '+91 81042 27377', href: 'https://wa.me/918104227377' }
+                { Icon: FiPhone, text: '+91 91068 57650', href: 'https://wa.me/919106857650' }
               ].map(({ Icon, text, href }) => (
                 <a key={text} href={href} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)', fontSize: '0.9rem', textDecoration: 'none' }}>
                   <Icon style={{ color: 'var(--primary-light)', flexShrink: 0 }} />
