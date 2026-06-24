@@ -8,7 +8,7 @@ import { WHATSAPP_NUMBER_DISPLAY } from '../utils/emailService'
 // ─────────────────────────────────────────────────────────────
 // 🔧 PAYMENT CONFIG — change this to YOUR UPI ID
 // ─────────────────────────────────────────────────────────────
-const UPI_ID = 'nexprojecto@upi'     // <-- replace with your real UPI ID
+const UPI_ID = 'Krutikavarma5@okhdfcbank'     // <-- replace with your real UPI ID
 const PAYEE_NAME = 'NexProjecto'
 
 const WHATSAPP_NUMBER = '919106857650'
