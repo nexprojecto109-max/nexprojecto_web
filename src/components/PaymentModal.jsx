@@ -8,10 +8,10 @@ import { WHATSAPP_NUMBER_DISPLAY } from '../utils/emailService'
 // ─────────────────────────────────────────────────────────────
 // 🔧 PAYMENT CONFIG — change this to YOUR UPI ID
 // ─────────────────────────────────────────────────────────────
-const UPI_ID = 'krutikavarma5@okhdfcbank'     // <-- replace with your real UPI ID
+const UPI_ID = 'nexprojecto@upi'     // <-- replace with your real UPI ID
 const PAYEE_NAME = 'NexProjecto'
 
-const WHATSAPP_NUMBER = '918104227377'
+const WHATSAPP_NUMBER = '919106857650'
 
 export default function PaymentModal({ project, onClose, onConfirm }) {
   const [step, setStep] = useState('pay') // 'pay' | 'confirm'
