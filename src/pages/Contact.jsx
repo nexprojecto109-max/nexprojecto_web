@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext'
 import { sendContactEmail, isEmailConfigured } from '../utils/emailService'
 import { trackEvent } from '../utils/analytics'
 
-const WHATSAPP_NUMBER = '918104227377'
+const WHATSAPP_NUMBER = '919106857650'
 
 export default function Contact() {
   const { user } = useAuth()
@@ -61,7 +61,7 @@ export default function Contact() {
 
   const info = [
     { icon: <FiMail />, label: 'Email', value: 'nexprojecto109@gmail.com', href: 'mailto:nexprojecto109@gmail.com' },
-    { icon: <FiPhone />, label: 'Phone / WhatsApp', value: '+91 81042 27377', href: 'https://wa.me/918104227377' },
+    { icon: <FiPhone />, label: 'Phone / WhatsApp', value: '+91 91068 57650', href: 'https://wa.me/919106857650' },
     { icon: <FiMapPin />, label: 'Location', value: 'Ahmedabad, Gujarat, India' },
   ]
 
