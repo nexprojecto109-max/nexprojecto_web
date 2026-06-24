@@ -46,7 +46,7 @@
 //
 //        For any questions, contact us at:
 //        Email   : nexprojecto109@gmail.com
-//        WhatsApp: +91 81042 27377
+//        WhatsApp: +91 91068 57650
 //
 //        Order ID: {{order_id}}
 //
@@ -89,7 +89,7 @@ export const EMAILJS_CONFIG = {
 }
 
 export const ADMIN_EMAIL = 'nexprojecto109@gmail.com'
-export const WHATSAPP_NUMBER_DISPLAY = '+91 81042 27377'
+export const WHATSAPP_NUMBER_DISPLAY = '+91 91068 57650'
 
 /**
  * Returns true once SERVICE_ID, PUBLIC_KEY and (at least) the relevant
