@@ -206,8 +206,8 @@ export default function TermsAndConditions() {
               nexprojecto109@gmail.com
             </a>{' '}
             or reach us on WhatsApp at{' '}
-            <a href="https://wa.me/918104227377" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-light)', textDecoration: 'none' }}>
-              +91 81042 27377
+            <a href="https://wa.me/919106857650" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-light)', textDecoration: 'none' }}>
+              +91 91068 57650
             </a>
           </p>
         </motion.div>
